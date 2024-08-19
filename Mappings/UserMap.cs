@@ -1,11 +1,12 @@
 ﻿using WebApi1.DTO;
+using WebApi1.Mappings;
 using WebApi1.Models;
 
 namespace WebApi1.Mapping
 {
-    public class UserMap
+    public class UserMap : IMapper<User,UserDTO>
     {
-        public User MapToUser(UserDTO userDTO)
+        public User Map(UserDTO userDTO)
         {
             return new User
             {
@@ -18,7 +19,7 @@ namespace WebApi1.Mapping
             };
         }
 
-        public UserDTO MapToUserDTO(User user)
+        public UserDTO Map(User user)
         {
             return new UserDTO
             {
@@ -31,7 +32,7 @@ namespace WebApi1.Mapping
             };
         }
 
-        public User UpdateMapToUser(User user,UserDTO userDTO)
+        public User UpdateMap(User user, UserDTO userDTO)
         {
             user.Surname = userDTO.Surname;
             user.Email = userDTO.Email;
@@ -40,6 +41,24 @@ namespace WebApi1.Mapping
             user.Firstname = userDTO.Firstname;
             user.Lastname = userDTO.Lastname;
             return user;
+        }
+
+        public IEnumerable<UserDTO> MapList(IEnumerable<User> users)
+        {
+            List<UserDTO> result = new List<UserDTO>();
+            foreach (User user in users)
+            {
+                result.Add(new UserDTO
+                {
+                    Firstname = user.Firstname,
+                    Lastname = user.Lastname,
+                    Email = user.Email,
+                    Password = user.Password,
+                    Phone = user.Phone,
+                    Surname = user.Surname
+                });
+            }
+            return result;
         }
     }
 }

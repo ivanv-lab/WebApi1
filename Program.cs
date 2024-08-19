@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using WebApi1.Mapping;
 using WebApi1.Models;
+using WebApi1.Rpeository;
+using WebApi1.Services;
 
 namespace WebApi1
 {
@@ -27,8 +29,9 @@ namespace WebApi1
             //AddSingleton и Addtransient в данном случае
             //делают одно и то же и работают оба варианта
 
-            //builder.Services.AddSingleton<UserMap>();
-            builder.Services.AddTransient<UserMap>();
+            //builder.Services.AddTransient<IUserMapper,UserMap>();
+            //builder.Services.AddTransient<IUserService,UserService>();
+            //builder.Services.AddTransient<IUserRepository,UserRepository>();
 
             var app = builder.Build();
 

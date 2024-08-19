@@ -19,5 +19,7 @@ namespace WebApi1.Models
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<DeliveryAddress> DeliveryAddresses { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
     }
 }
