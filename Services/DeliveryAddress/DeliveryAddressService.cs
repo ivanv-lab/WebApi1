@@ -59,6 +59,7 @@ namespace WebApi1.Services
             if (updateAddress == null) throw new Exception("Delivery address" +
                 " not found");
             updateAddress = _mapper.UpdateMap(updateAddress, deliveryAddressDTO);
+            await _addressRepository.Update(updateAddress);
             return _mapper.Map(updateAddress);
         }
     }

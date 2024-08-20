@@ -5,6 +5,7 @@ using WebApi1.Mapping;
 using WebApi1.Mappings;
 using WebApi1.Models;
 using WebApi1.Repositories;
+using WebApi1.Repositories.ProductCategoryRepository;
 using WebApi1.Rpeository;
 using WebApi1.Services;
 
@@ -35,16 +36,26 @@ namespace WebApi1
             builder.Services.AddTransient<IMapper<User,UserDTO>, UserMap>();
             builder.Services.AddTransient<IMapper<DeliveryAddress,DeliveryAddressDTO>,DeliveryAddressMapper>();
             builder.Services.AddTransient<IMapper<OrderStatus,OrderStatusDTO>,OrderStatusMap>();
+            builder.Services.AddTransient<IMapper<ProductCategory,ProductCategoryDTO>,ProductCategoryMap>();
+            builder.Services.AddTransient<IMapper<Product,ProductDTO>,ProductMap>();
+            builder.Services.AddTransient<IMapper<Order,OrderDTO>,OrderMap>();
 
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IDeliveryAddressService,DeliveryAddressService>();
             builder.Services.AddTransient<IOrderStatusService,OrderStatusService>();
+            builder.Services.AddTransient<IProductCategoryService,ProductCategoryService>();
+            builder.Services.AddTransient<IProductService,ProductService>();
+            builder.Services.AddTransient<IOrderService,OrderService>();
 
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IDeliveryAddressRepository,DeliveryAddressRepository>();
             builder.Services.AddTransient<IOrderStatusRepository,OrderStatusRepository>();
+            builder.Services.AddTransient<IProductCategoryRepository,ProductCategoryRepository>();
+            builder.Services.AddTransient<IProductRepository,ProductRepository>();
+            builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 
-
+            //Убрать Category из DTO
+            //builder.Services.AddTransient<ProductMap,ProductCategoryMap>();
 
             var app = builder.Build();
 
