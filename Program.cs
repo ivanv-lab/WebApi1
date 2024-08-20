@@ -1,7 +1,10 @@
 
 using Microsoft.EntityFrameworkCore;
+using WebApi1.DTO;
 using WebApi1.Mapping;
+using WebApi1.Mappings;
 using WebApi1.Models;
+using WebApi1.Repositories;
 using WebApi1.Rpeository;
 using WebApi1.Services;
 
@@ -29,9 +32,19 @@ namespace WebApi1
             //AddSingleton и Addtransient в данном случае
             //делают одно и то же и работают оба варианта
 
-            //builder.Services.AddTransient<IUserMapper,UserMap>();
-            //builder.Services.AddTransient<IUserService,UserService>();
-            //builder.Services.AddTransient<IUserRepository,UserRepository>();
+            builder.Services.AddTransient<IMapper<User,UserDTO>, UserMap>();
+            builder.Services.AddTransient<IMapper<DeliveryAddress,DeliveryAddressDTO>,DeliveryAddressMapper>();
+            builder.Services.AddTransient<IMapper<OrderStatus,OrderStatusDTO>,OrderStatusMap>();
+
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IDeliveryAddressService,DeliveryAddressService>();
+            builder.Services.AddTransient<IOrderStatusService,OrderStatusService>();
+
+            builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IDeliveryAddressRepository,DeliveryAddressRepository>();
+            builder.Services.AddTransient<IOrderStatusRepository,OrderStatusRepository>();
+
+
 
             var app = builder.Build();
 
