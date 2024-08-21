@@ -11,9 +11,7 @@ namespace WebApi1.Models
         public decimal Price {  get; set; }
         public bool IsDeleted { get; set; }=false;
 
-        [NotMapped]
         public virtual Order? Order { get; set; }
-        [NotMapped]
         public virtual Product? Product { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace WebApi1.Models
         public int Count {  get; set; }
         public bool IsDeleted { get; set; } = false;
 
-        [NotMapped]
         public virtual ProductCategory? Category { get; set; }
+        public virtual ICollection<OrderProduct>? OrderProducts { get; set; }
     }
 }

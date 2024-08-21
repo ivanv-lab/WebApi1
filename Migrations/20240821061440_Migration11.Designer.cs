@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi1.Models;
 
@@ -10,9 +11,11 @@ using WebApi1.Models;
 namespace WebApi1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240821061440_Migration11")]
+    partial class Migration11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -72,12 +75,6 @@ namespace WebApi1.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeliveryAddressId");
-
-                    b.HasIndex("StatusId");
-
-                    b.HasIndex("UserId");
-
                     b.ToTable("Orders");
                 });
 
@@ -103,8 +100,6 @@ namespace WebApi1.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
@@ -202,53 +197,19 @@ namespace WebApi1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("WebApi1.Models.Order", b =>
-                {
-                    b.HasOne("WebApi1.Models.DeliveryAddress", "DeliveryAddress")
-                        .WithMany("Orders")
-                        .HasForeignKey("DeliveryAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebApi1.Models.OrderStatus", "Status")
-                        .WithMany("Orders")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebApi1.Models.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DeliveryAddress");
-
-                    b.Navigation("Status");
-
-                    b.Navigation("User");
+                    b.ToTable("Users", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
                 });
 
             modelBuilder.Entity("WebApi1.Models.OrderProduct", b =>
                 {
-                    b.HasOne("WebApi1.Models.Order", "Order")
-                        .WithMany("OrderProducts")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebApi1.Models.Product", "Product")
+                    b.HasOne("WebApi1.Models.Product", null)
                         .WithMany("OrderProducts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("WebApi1.Models.Product", b =>
@@ -262,21 +223,6 @@ namespace WebApi1.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("WebApi1.Models.DeliveryAddress", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("WebApi1.Models.Order", b =>
-                {
-                    b.Navigation("OrderProducts");
-                });
-
-            modelBuilder.Entity("WebApi1.Models.OrderStatus", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
             modelBuilder.Entity("WebApi1.Models.Product", b =>
                 {
                     b.Navigation("OrderProducts");
@@ -285,11 +231,6 @@ namespace WebApi1.Migrations
             modelBuilder.Entity("WebApi1.Models.ProductCategory", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("WebApi1.Models.User", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

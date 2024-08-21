@@ -6,6 +6,7 @@ namespace WebApi1.Mappings
 {
     public class OrderMap : IMapper<Order, OrderDTO>
     {
+        private readonly
         public Order Map(OrderDTO dto)
         {
             return new Order
@@ -14,7 +15,8 @@ namespace WebApi1.Mappings
                 DeliveryAddressId = dto.DeliveryAddressId,
                 StatusId = dto.StatusId,
                 Sum = dto.Sum,
-                UserId = dto.UserId
+                UserId = dto.UserId,
+                ProductList = 
             };
         }
 

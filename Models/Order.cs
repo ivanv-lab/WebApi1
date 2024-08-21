@@ -11,12 +11,12 @@ namespace WebApi1.Models
         public DateTime Date {  get; set; }
         public decimal Sum {  get; set; }
         public bool IsDeleted { get; set; }=false;
+        public List<OrderProduct>? ProductList { get; set; }
 
-        [NotMapped]
-        public virtual OrderStatus? Status { get; set; }
-        [NotMapped]
-        public virtual DeliveryAddress? DeliveryAddress { get; set; }
-        [NotMapped]
         public virtual User? User { get; set; }
+        public virtual OrderStatus? Status { get; set; }
+        public virtual DeliveryAddress? DeliveryAddress { get; set; }
+        public virtual ICollection<OrderProduct>? OrderProducts { get; set; }
+
     }
 }

@@ -28,8 +28,37 @@ namespace WebApi1.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable(nameof(Users)
-                , t => t.ExcludeFromMigrations());
+            base.OnModelCreating(modelBuilder);
+           
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Status)
+                .WithMany(s => s.Orders)
+                .HasForeignKey(o => o.StatusId);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.DeliveryAddress)
+                .WithMany(d => d.Orders)
+                .HasForeignKey(o => o.DeliveryAddressId);
+
+            modelBuilder.Entity<OrderProduct>()
+                .HasOne(o => o.Product)
+                .WithMany(p => p.OrderProducts)
+                .HasForeignKey(o => o.ProductId);
+
+            modelBuilder.Entity<OrderProduct>()
+                .HasOne(op => op.Order)
+                .WithMany(o => o.OrderProducts)
+                .HasForeignKey(op => op.OrderId);
         }
     }
 }
