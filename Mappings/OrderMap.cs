@@ -6,7 +6,8 @@ namespace WebApi1.Mappings
 {
     public class OrderMap : IMapper<Order, OrderDTO>
     {
-        private readonly
+        private readonly OrderProductMap _mapper;
+
         public Order Map(OrderDTO dto)
         {
             return new Order
@@ -16,7 +17,7 @@ namespace WebApi1.Mappings
                 StatusId = dto.StatusId,
                 Sum = dto.Sum,
                 UserId = dto.UserId,
-                ProductList = 
+                ProductList= (List<OrderProduct>)_mapper.MapList((IEnumerable<OrderProduct>)dto.ProductList)
             };
         }
 
@@ -28,7 +29,8 @@ namespace WebApi1.Mappings
                 DeliveryAddressId = model.DeliveryAddressId,
                 StatusId = model.StatusId,
                 Sum = model.Sum,
-                UserId = model.UserId
+                UserId = model.UserId,
+                ProductList = (List<OrderProductDTO>)_mapper.MapList(model.ProductList)
             };
         }
 
@@ -43,7 +45,8 @@ namespace WebApi1.Mappings
                     DeliveryAddressId = model.DeliveryAddressId,
                     StatusId = model.StatusId,
                     Sum = model.Sum,
-                    UserId = model.UserId
+                    UserId = model.UserId,
+                    ProductList= (List<OrderProductDTO>)_mapper.MapList(model.ProductList)
                 });
             }
             return result;
@@ -56,6 +59,7 @@ namespace WebApi1.Mappings
             model.StatusId = dto.StatusId;
             model.Sum = dto.Sum;
             model.UserId = dto.UserId;
+            model.ProductList = (List<OrderProduct>)_mapper.MapList((IEnumerable<OrderProduct>)dto.ProductList);
             return model;
         }
     }
