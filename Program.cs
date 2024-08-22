@@ -5,6 +5,7 @@ using WebApi1.Mapping;
 using WebApi1.Mappings;
 using WebApi1.Models;
 using WebApi1.Repositories;
+using WebApi1.Repositories.OrderProductRepository;
 using WebApi1.Repositories.ProductCategoryRepository;
 using WebApi1.Rpeository;
 using WebApi1.Services;
@@ -46,6 +47,7 @@ namespace WebApi1
             builder.Services.AddTransient<IProductCategoryService,ProductCategoryService>();
             builder.Services.AddTransient<IProductService,ProductService>();
             builder.Services.AddTransient<IOrderService,OrderService>();
+            builder.Services.AddTransient<IOrderProductService,OrderProductService>();
 
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IDeliveryAddressRepository,DeliveryAddressRepository>();
@@ -53,6 +55,7 @@ namespace WebApi1
             builder.Services.AddTransient<IProductCategoryRepository,ProductCategoryRepository>();
             builder.Services.AddTransient<IProductRepository,ProductRepository>();
             builder.Services.AddTransient<IOrderRepository, OrderRepository>();
+            builder.Services.AddTransient<IOrderProductRepository,OrderProductRepository>();
 
             //Убрать Category из DTO
             //builder.Services.AddTransient<ProductMap,ProductCategoryMap>();

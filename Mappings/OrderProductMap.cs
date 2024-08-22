@@ -3,9 +3,9 @@ using WebApi1.Models;
 
 namespace WebApi1.Mappings
 {
-    public class OrderProductMap : IMapper<OrderProduct, OrderProductDTO>
+    public static class OrderProductMap
     {
-        public OrderProduct Map(OrderProductDTO dto)
+        public static OrderProduct Map(this OrderProductDTO dto)
         {
             return new OrderProduct
             {
@@ -16,7 +16,7 @@ namespace WebApi1.Mappings
             };
         }
 
-        public OrderProductDTO Map(OrderProduct model)
+        public static OrderProductDTO Map(this OrderProduct model)
         {
             return new OrderProductDTO
             {
@@ -27,7 +27,7 @@ namespace WebApi1.Mappings
             };
         }
 
-        public IEnumerable<OrderProductDTO> MapList(IEnumerable<OrderProduct> models)
+        public static IEnumerable<OrderProductDTO> MapList(this IEnumerable<OrderProduct> models)
         {
             List<OrderProductDTO> result= new List<OrderProductDTO>();
             foreach (var model in models)
@@ -43,9 +43,7 @@ namespace WebApi1.Mappings
             return result;
         }
 
-
-
-        public OrderProduct UpdateMap(OrderProduct model, OrderProductDTO dto)
+        public static OrderProduct UpdateMap(this OrderProduct model, OrderProductDTO dto)
         {
             model.OrderId = dto.OrderId;
             model.ProductId = dto.ProductId;

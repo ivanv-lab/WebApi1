@@ -17,14 +17,14 @@ namespace WebApi1.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderProductDTO>> GetOrderProduct(long id)
         {
-            var orderProductDto = await _orderProductService.GetById(id);
+            var orderProductDto=await _orderProductService.GetById(id);
             return Ok(orderProductDto);
         }
 
         [HttpGet("order/{id}")]
-        public async Task<ActionResult<IEnumerable<OrderProductDTO>>> GetByOrderId(long id)
+        public async Task<ActionResult<IEnumerable<OrderProductDTO>>> GetByOrder(long id)
         {
-            var orderProductsDto = await _orderProductService.GetByOrderId(id);
+            var orderProductsDto = await _orderProductService.GetByOrder(id);
             return Ok(orderProductsDto);
         }
 
@@ -35,10 +35,10 @@ namespace WebApi1.Controllers
             return Ok(newOrderProduct);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteORderProduct(long id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOrderProduct(long id)
         {
-            bool res=await _orderProductService.Delete(id);
+            bool res = await _orderProductService.Delete(id);
             if(res==true)
                 return Ok();
             return BadRequest();

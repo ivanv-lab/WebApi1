@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Humanizer;
+using System.Diagnostics;
 using WebApi1.DTO;
 using WebApi1.Models;
 
@@ -6,19 +7,21 @@ namespace WebApi1.Mappings
 {
     public class OrderMap : IMapper<Order, OrderDTO>
     {
-        private readonly OrderProductMap _mapper;
-
         public Order Map(OrderDTO dto)
         {
-            return new Order
+            var order= new Order
             {
                 Date = dto.Date,
                 DeliveryAddressId = dto.DeliveryAddressId,
                 StatusId = dto.StatusId,
                 Sum = dto.Sum,
                 UserId = dto.UserId,
-                ProductList= (List<OrderProduct>)_mapper.MapList((IEnumerable<OrderProduct>)dto.ProductList)
             };
+            if (dto.ProductList != null)
+            {
+                order.ProductList = dto.ProductList?.Select(op =>op.Map()).ToList();
+            }
+            return order;
         }
 
         public OrderDTO Map(Order model)
@@ -30,7 +33,7 @@ namespace WebApi1.Mappings
                 StatusId = model.StatusId,
                 Sum = model.Sum,
                 UserId = model.UserId,
-                ProductList = (List<OrderProductDTO>)_mapper.MapList(model.ProductList)
+                ProductList = model.ProductList?.Select(op =>op.Map()).ToList()
             };
         }
 
@@ -46,7 +49,7 @@ namespace WebApi1.Mappings
                     StatusId = model.StatusId,
                     Sum = model.Sum,
                     UserId = model.UserId,
-                    ProductList= (List<OrderProductDTO>)_mapper.MapList(model.ProductList)
+                    ProductList = model.ProductList?.Select(op =>op.Map()).ToList()
                 });
             }
             return result;
@@ -59,7 +62,7 @@ namespace WebApi1.Mappings
             model.StatusId = dto.StatusId;
             model.Sum = dto.Sum;
             model.UserId = dto.UserId;
-            model.ProductList = (List<OrderProduct>)_mapper.MapList((IEnumerable<OrderProduct>)dto.ProductList);
+            model.ProductList = dto.ProductList?.Select(op => op.Map()).ToList();
             return model;
         }
     }

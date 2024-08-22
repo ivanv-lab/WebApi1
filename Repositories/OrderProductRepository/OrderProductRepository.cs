@@ -36,5 +36,11 @@ namespace WebApi1.Repositories.OrderProductRepository
                 && op.OrderId == id)
                 .ToListAsync();
         }
+
+        public async Task<long> GetOrderId(OrderProduct orderProduct)
+        {
+            var order = await _context.Orders.FindAsync(orderProduct.Order.Id);
+            return order.Id;
+        }
     }
 }
