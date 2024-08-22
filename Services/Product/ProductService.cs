@@ -65,5 +65,45 @@ namespace WebApi1.Services
             await _productRepository.Update(updateProduct);
             return _mapper.Map(updateProduct);
         }
+
+        public async Task<IEnumerable<ProductDTO>> SortSearch(string sortOrder,
+            string searchString)
+        {
+            var products=await _productRepository.GetAll();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(p => p.Name.Contains(searchString)
+                || p.Category.Name.Contains(searchString)
+                || p.Price.ToString().Contains(searchString))
+                    .ToList();
+            }
+
+            switch (sortOrder)
+            {
+                case "Name":
+                    products=products.OrderBy(p=>p.Name)
+                        .ToList(); break;
+                case "Name_desc":
+                    products=products.OrderByDescending(p=>p.Name)
+                        .ToList(); break;
+                case "CName":
+                    products=products.OrderBy(p=>p.Category.Name)
+                        .ToList(); break;
+                case "CName_desc":
+                    products=products.OrderByDescending(p=>p.Category.Name)
+                        .ToList(); break;
+                case "Price":
+                    products=products.OrderBy(p=>p.Price)
+                        .ToList(); break;
+                case "Price_desc":
+                    products=products.OrderByDescending(p=>p.Price)
+                        .ToList(); break;
+                default:
+                    products=products.OrderByDescending(p=>p.Id)
+                        .ToList(); break;
+            }
+            return _mapper.MapList(products);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using WebApi1.Mappings;
 using WebApi1.Models;
 using WebApi1.Repositories;
+using WebApi1.Repositories.OrderProductRepository;
 
 namespace WebApi1.Services
 {
@@ -9,11 +10,13 @@ namespace WebApi1.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper<Order, OrderDTO> _mapper;
+        private readonly IOrderProductRepository _orderProductRepository;
         public OrderService(IOrderRepository orderRepository,
-            IMapper<Order, OrderDTO> mapper)
+            IMapper<Order, OrderDTO> mapper, IOrderProductRepository orderProductRepository)
         {
             _orderRepository = orderRepository;
             _mapper = mapper;
+            _orderProductRepository = orderProductRepository;
         }
 
         public async Task<OrderDTO> Create(OrderDTO orderDTO)
@@ -49,6 +52,7 @@ namespace WebApi1.Services
         public async Task<OrderDTO> GetById(long id)
         {
             var order=await _orderRepository.GetById(id);
+            await UpdateSum(id);
             return _mapper.Map(order);
         }
 
@@ -71,6 +75,15 @@ namespace WebApi1.Services
             updateOrder=_mapper.UpdateMap(updateOrder, orderDTO);
             await _orderRepository.Update(updateOrder);
             return _mapper.Map(updateOrder);
+        }
+
+        private async Task UpdateSum(long id)
+        {
+            var orderProducts = await _orderProductRepository.GetByOrder(id);
+            var sum = orderProducts.Sum(op => op.Price * op.Count);
+            var order=await _orderRepository.GetById(id);
+            order.Sum = sum;
+            await _orderRepository.Update(order);
         }
     }
 }

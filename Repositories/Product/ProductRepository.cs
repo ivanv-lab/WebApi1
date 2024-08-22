@@ -28,6 +28,7 @@ namespace WebApi1.Repositories
         {
             return await _context.Products
                 .Where(p => p.IsDeleted == false)
+                .Include(p=>p.Category)
                 .ToListAsync();
         }
 
