@@ -11,7 +11,7 @@ using WebApi1.Models;
 namespace WebApi1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240822082826_Migration14")]
+    [Migration("20240822100014_Migration14")]
     partial class Migration14
     {
         /// <inheritdoc />

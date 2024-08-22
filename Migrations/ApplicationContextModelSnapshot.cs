@@ -43,7 +43,7 @@ namespace WebApi1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeliveryAddresses");
+                    b.ToTable("DeliveryAddresses", (string)null);
                 });
 
             modelBuilder.Entity("WebApi1.Models.Order", b =>
@@ -78,7 +78,7 @@ namespace WebApi1.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("WebApi1.Models.OrderProduct", b =>
@@ -113,7 +113,7 @@ namespace WebApi1.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProducts");
+                    b.ToTable("OrderProducts", (string)null);
                 });
 
             modelBuilder.Entity("WebApi1.Models.OrderStatus", b =>
@@ -127,7 +127,7 @@ namespace WebApi1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderStatuses");
+                    b.ToTable("OrderStatuses", (string)null);
                 });
 
             modelBuilder.Entity("WebApi1.Models.Product", b =>
@@ -158,7 +158,7 @@ namespace WebApi1.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("WebApi1.Models.ProductCategory", b =>
@@ -175,7 +175,7 @@ namespace WebApi1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategories", (string)null);
                 });
 
             modelBuilder.Entity("WebApi1.Models.User", b =>
@@ -207,7 +207,7 @@ namespace WebApi1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("WebApi1.Models.Order", b =>

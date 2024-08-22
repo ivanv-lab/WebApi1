@@ -3,7 +3,7 @@ using WebApi1.Models;
 
 namespace WebApi1.Repositories.OrderProductRepository
 {
-    public class OrderProductRepository : IOrderProductRepository
+    public class OrderProductRepository: IOrderProductRepository
     {
         private readonly ApplicationContext _context;
         public OrderProductRepository(ApplicationContext context)
@@ -29,18 +29,19 @@ namespace WebApi1.Repositories.OrderProductRepository
             return await _context.OrderProducts.FindAsync(id);
         }
 
+        public async Task Update(OrderProduct orderProduct)
+        {
+            _context.Entry(orderProduct).State=
+                EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<OrderProduct>> GetByOrder(long id)
         {
             return await _context.OrderProducts
                 .Where(op => op.IsDeleted == false
                 && op.OrderId == id)
                 .ToListAsync();
-        }
-
-        public async Task<long> GetOrderId(OrderProduct orderProduct)
-        {
-            var order = await _context.Orders.FindAsync(orderProduct.Order.Id);
-            return order.Id;
         }
     }
 }

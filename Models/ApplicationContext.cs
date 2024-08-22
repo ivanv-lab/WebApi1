@@ -56,9 +56,9 @@ namespace WebApi1.Models
                 .HasForeignKey(o => o.ProductId);
 
             modelBuilder.Entity<OrderProduct>()
-                .HasOne(op => op.Order)
-                .WithMany(o => o.OrderProducts)
-                .HasForeignKey(op => op.OrderId);
+                .HasOne(o => o.Order)
+                .WithMany(or => or.OrderProducts)
+                .HasForeignKey(o => o.OrderId);
         }
     }
 }

@@ -9,19 +9,14 @@ namespace WebApi1.Mappings
     {
         public Order Map(OrderDTO dto)
         {
-            var order= new Order
+            return new Order
             {
                 Date = dto.Date,
                 DeliveryAddressId = dto.DeliveryAddressId,
                 StatusId = dto.StatusId,
                 Sum = dto.Sum,
-                UserId = dto.UserId,
+                UserId = dto.UserId
             };
-            if (dto.ProductList != null)
-            {
-                order.ProductList = dto.ProductList?.Select(op =>op.Map()).ToList();
-            }
-            return order;
         }
 
         public OrderDTO Map(Order model)
@@ -33,7 +28,6 @@ namespace WebApi1.Mappings
                 StatusId = model.StatusId,
                 Sum = model.Sum,
                 UserId = model.UserId,
-                ProductList = model.ProductList?.Select(op =>op.Map()).ToList()
             };
         }
 
@@ -49,7 +43,6 @@ namespace WebApi1.Mappings
                     StatusId = model.StatusId,
                     Sum = model.Sum,
                     UserId = model.UserId,
-                    ProductList = model.ProductList?.Select(op =>op.Map()).ToList()
                 });
             }
             return result;
@@ -62,7 +55,6 @@ namespace WebApi1.Mappings
             model.StatusId = dto.StatusId;
             model.Sum = dto.Sum;
             model.UserId = dto.UserId;
-            model.ProductList = dto.ProductList?.Select(op => op.Map()).ToList();
             return model;
         }
     }

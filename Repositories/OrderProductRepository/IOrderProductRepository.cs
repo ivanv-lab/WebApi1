@@ -7,7 +7,7 @@ namespace WebApi1.Repositories.OrderProductRepository
         public Task<OrderProduct> GetById(long id);
         public Task<IEnumerable<OrderProduct>> GetByOrder(long id);
         public Task Add(OrderProduct orderProduct);
+        public Task Update(OrderProduct orderProduct);
         public Task Delete(long id);
-        public Task<long> GetOrderId(OrderProduct orderProduct);
     }
 }

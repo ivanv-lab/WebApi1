@@ -3,52 +3,51 @@ using WebApi1.Models;
 
 namespace WebApi1.Mappings
 {
-    public static class OrderProductMap
+    public class OrderProductMap : IMapper<OrderProduct, OrderProductDTO>
     {
-        public static OrderProduct Map(this OrderProductDTO dto)
+        public OrderProduct Map(OrderProductDTO dto)
         {
             return new OrderProduct
             {
-                OrderId = dto.OrderId,
                 ProductId = dto.ProductId,
+                OrderId = dto.OrderId,
                 Count = dto.Count,
                 Price = dto.Price
             };
         }
 
-        public static OrderProductDTO Map(this OrderProduct model)
+        public OrderProductDTO Map(OrderProduct model)
         {
             return new OrderProductDTO
             {
-                OrderId = model.OrderId,
-                ProductId = model.ProductId,
                 Count = model.Count,
-                Price = model.Price
+                Price = model.Price,
+                ProductId = model.ProductId,
+                OrderId = model.OrderId
             };
         }
 
-        public static IEnumerable<OrderProductDTO> MapList(this IEnumerable<OrderProduct> models)
+        public IEnumerable<OrderProductDTO> MapList(IEnumerable<OrderProduct> models)
         {
-            List<OrderProductDTO> result= new List<OrderProductDTO>();
-            foreach (var model in models)
-            {
+            List<OrderProductDTO> result = new List<OrderProductDTO>();
+            foreach (var model in models) {
                 result.Add(new OrderProductDTO
                 {
                     OrderId = model.OrderId,
                     ProductId = model.ProductId,
-                    Count = model.Count,
-                    Price = model.Price
+                    Price = model.Price,
+                    Count = model.Count
                 });
             }
             return result;
         }
 
-        public static OrderProduct UpdateMap(this OrderProduct model, OrderProductDTO dto)
+        public OrderProduct UpdateMap(OrderProduct model, OrderProductDTO dto)
         {
-            model.OrderId = dto.OrderId;
             model.ProductId = dto.ProductId;
-            model.Count = dto.Count;
+            model.OrderId = dto.OrderId;
             model.Price = dto.Price;
+            model.Count = dto.Count;
             return model;
         }
     }

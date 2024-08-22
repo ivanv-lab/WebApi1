@@ -11,7 +11,7 @@ namespace WebApi1.Models
         public DateTime Date {  get; set; }
         public decimal Sum {  get; set; }
         public bool IsDeleted { get; set; }=false;
-        public List<OrderProduct>? ProductList { get; set; }
+        //public List<OrderProduct>? ProductList { get; set; }
 
         public virtual User? User { get; set; }
         public virtual OrderStatus? Status { get; set; }

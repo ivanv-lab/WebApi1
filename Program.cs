@@ -40,6 +40,7 @@ namespace WebApi1
             builder.Services.AddTransient<IMapper<ProductCategory,ProductCategoryDTO>,ProductCategoryMap>();
             builder.Services.AddTransient<IMapper<Product,ProductDTO>,ProductMap>();
             builder.Services.AddTransient<IMapper<Order,OrderDTO>,OrderMap>();
+            builder.Services.AddTransient<IMapper<OrderProduct, OrderProductDTO>, OrderProductMap>();
 
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IDeliveryAddressService,DeliveryAddressService>();
