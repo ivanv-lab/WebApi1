@@ -71,7 +71,8 @@ namespace WebApi1.Services
         {
             var products=await _productRepository.GetAll();
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(searchString) 
+                || searchString == " ")
             {
                 products = products.Where(p => p.Name.Contains(searchString)
                 || p.Category.Name.Contains(searchString)

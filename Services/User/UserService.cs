@@ -1,4 +1,5 @@
-﻿using SQLitePCL;
+﻿using Microsoft.AspNetCore.Mvc;
+using SQLitePCL;
 using WebApi1.DTO;
 using WebApi1.Mapping;
 using WebApi1.Mappings;
@@ -60,6 +61,50 @@ namespace WebApi1.Services
             updateUser = _mapper.UpdateMap(updateUser, userDTO);
             await _userRepository.Update(updateUser);
             return _mapper.Map(updateUser);
+        }
+
+        public async Task<IEnumerable<UserDTO>> SortSearch(string sortOrder, string searchString)
+        {
+            var users=await _userRepository.GetAll();
+
+            if (!String.IsNullOrEmpty(searchString)
+                || searchString == " ")
+            {
+                users=users.Where(u=>
+                u.Firstname.Contains(searchString)
+                || u.Surname.Contains(searchString)
+                || u.Lastname.Contains(searchString)
+                || u.Email.Contains(searchString)
+                || u.Phone.Contains(searchString))
+                    .ToList();
+            }
+
+            switch (sortOrder)
+            {
+                case "FN":
+                    users=users.OrderBy(u=>u.Firstname).ToList();
+                    break;
+                case "FN_desc":
+                    users = users.OrderByDescending(u => u.Firstname).ToList();
+                    break;
+                case "SN":
+                    users=users.OrderBy(u=>u.Surname).ToList();
+                    break;
+                case "SN_desc":
+                    users = users.OrderByDescending(u => u.Surname).ToList();
+                    break;
+                case "LN":
+                    users=users.OrderBy(u=>u.Lastname).ToList();
+                    break;
+                case "LN_desc":
+                    users = users.OrderByDescending(u => u.Lastname).ToList();
+                    break;
+                default:
+                    users=users.OrderByDescending(u=>u.Id).ToList();
+                    break;
+            }
+
+            return _mapper.MapList(users);
         }
     }
 }

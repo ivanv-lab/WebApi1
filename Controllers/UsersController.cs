@@ -72,5 +72,13 @@ namespace WebApi1.Controller
                 return Ok();
             return BadRequest();
         }
+
+        [HttpGet("{sortOrder=},{searchString=}")]
+        public async Task<ActionResult<IEnumerable<UserDTO>>> SearchSortUsers(
+            string sortOrder=null, string searchString=null)
+        {
+            var users=await _userService.SortSearch(sortOrder, searchString);
+            return Ok(users);
+        }
     }
 }

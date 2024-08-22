@@ -61,5 +61,33 @@ namespace WebApi1.Services
             await _categoryRepository.Update(updateCategory);
             return _mapper.Map(updateCategory);
         }
+
+        public async Task<IEnumerable<ProductCategoryDTO>> SortSearch(string sortOrder, string searchString)
+        {
+            var categories = await _categoryRepository.GetAll();
+
+            if (!String.IsNullOrEmpty(searchString) 
+                || searchString==" ")
+            {
+                categories = categories.Where(c =>
+                c.Name.Contains(searchString))
+                    .ToList();
+            }
+
+            switch (sortOrder)
+            {
+                case "Name":
+                    categories=categories.OrderBy(c=>c.Name)
+                        .ToList(); break;
+                case "Name_desc":
+                    categories = categories.OrderByDescending(c => c.Name)
+                        .ToList(); break;
+                default: 
+                    categories=categories.OrderByDescending(c=>c.Id)
+                        .ToList(); break;
+            }
+
+            return _mapper.MapList(categories);
+        }
     }
 }

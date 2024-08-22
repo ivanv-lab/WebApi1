@@ -57,5 +57,13 @@ namespace WebApi1.Controllers
                 return Ok();
             return BadRequest();
         }
+
+        [HttpGet("{sortOrder=},{searchString=}")]
+        public async Task<ActionResult<IEnumerable<ProductCategoryDTO>>> SearchSortCategories(
+            string sortOrder=null,string searchString =null)
+        {
+            var categories = await _categoryService.SortSearch(sortOrder, searchString);
+            return Ok(categories);
+        }
     }
 }

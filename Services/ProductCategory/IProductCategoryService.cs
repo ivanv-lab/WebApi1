@@ -10,5 +10,7 @@ namespace WebApi1.Services
         public Task<ProductCategoryDTO> Create(ProductCategoryDTO productCategoryDTO);
         public Task<ProductCategoryDTO> Update(long id, ProductCategoryDTO productCategoryDTO);
         public Task<bool> Delete(long id);
+        public Task<IEnumerable<ProductCategoryDTO>> SortSearch(string sortOrder,
+            string searchString);
     }
 }
