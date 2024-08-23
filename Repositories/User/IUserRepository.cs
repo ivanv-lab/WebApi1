@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebApi1.DTO;
-using WebApi1.Models;
+﻿using WebApi1.Models;
 
 namespace WebApi1.Rpeository
 {
