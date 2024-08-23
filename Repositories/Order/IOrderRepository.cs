@@ -1,4 +1,5 @@
-﻿using WebApi1.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebApi1.Models;
 
 namespace WebApi1.Repositories
 {
@@ -12,6 +13,6 @@ namespace WebApi1.Repositories
         public Task Add(Order order);
         public Task Update(Order order);
         public Task Delete(long id);
-
+        public Task GetChartData();
     }
 }

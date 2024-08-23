@@ -62,5 +62,66 @@ namespace WebApi1.Services
             await _addressRepository.Update(updateAddress);
             return _mapper.Map(updateAddress);
         }
+
+        public async Task<IEnumerable<DeliveryAddressDTO>> SortSearch(
+            string sortOrder,string searchString)
+        {
+            var addresses=await _addressRepository.GetAll();
+
+            if(!String.IsNullOrEmpty(searchString)
+                || searchString==" ")
+            {
+                addresses=addresses.Where(a=>
+                a.City.Contains(searchString)
+                || a.Street.Contains(searchString)
+                || a.Flat.Contains(searchString)
+                || a.Postcode.Contains(searchString)
+                || a.House.Contains(searchString))
+                    .ToList();
+            }
+
+            switch(sortOrder)
+            {
+                case "City":
+                    addresses=addresses
+                        .OrderBy(a=>a.City)
+                        .ToList();
+                    break;
+                case "City_desc":
+                    addresses=addresses
+                        .OrderByDescending(a=>a.City)
+                        .ToList();
+                    break;
+                case "Street":
+                    addresses=addresses
+                        .OrderBy(a=>a.Street).ToList(); break;
+                case "Street_desc":
+                    addresses=addresses.OrderByDescending(a=>a.Street)
+                        .ToList(); break;
+                case "Flat":
+                    addresses=addresses.OrderBy(a=>Convert.ToInt32(a.Flat)).ToList();
+                    break;
+                case "Flat_desc":
+                    addresses=addresses.OrderByDescending(a => Convert.ToInt32(a.Flat))
+                        .ToList();break;
+                case "Post":
+                    addresses=addresses.OrderBy(a=>Convert.ToInt32(a.Postcode))
+                        .ToList(); break;
+                case "Post_desc":
+                    addresses = addresses.OrderByDescending(a => Convert.ToInt32(a.Postcode))
+                        .ToList(); break;
+                case "House":
+                    addresses=addresses.OrderBy(a=> Convert.ToInt32(a.House))
+                        .ToList(); break;
+                case "House_desc":
+                    addresses=addresses.OrderByDescending(a=> Convert.ToInt32(a.House))
+                        .ToList(); break;
+                default:
+                    addresses = addresses.OrderByDescending(a => a.Id).ToList();
+                    break;
+            }
+
+            return _mapper.MapList(addresses);
+        }
     }
 }

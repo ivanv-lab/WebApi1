@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using WebApi1.Models;
 
 namespace WebApi1.Repositories
@@ -28,6 +30,9 @@ namespace WebApi1.Repositories
         {
             return await _context.Orders
                 .Where(o => o.IsDeleted == false)
+                .Include(o=>o.User)
+                .Include(o=>o.DeliveryAddress)
+                .Include(o=>o.Status)
                 .ToListAsync();
         }
 
@@ -65,6 +70,25 @@ namespace WebApi1.Repositories
             _context.Entry(order).State=
                 EntityState.Modified;
             await _context.SaveChangesAsync();
+        }
+
+        public Task GetChartData()
+        {
+            var orders=_context.Orders
+                .GroupBy(o => new
+                {
+                    Year=o.Date.Year,
+                    Month=o.Date.Month
+                }).Select(g => new
+                {
+                    year=g.Key.Year,
+                    month=g.Key.Month,
+                    sum=g.Sum(o=>o.Sum)
+                })
+                .OrderBy(o=>o.year)
+                .ToListAsync();
+
+            return orders;
         }
     }
 }

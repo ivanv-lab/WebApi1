@@ -69,6 +69,7 @@ namespace WebApi1
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseMiddleware<ErrorhandlerMiddleware>();
 
             app.UseHttpsRedirection();
 

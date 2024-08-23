@@ -12,5 +12,7 @@ namespace WebApi1.Services
         public Task<OrderDTO> Create(OrderDTO orderDTO);
         public Task<OrderDTO> Update(long id, OrderDTO orderDTO);
         public Task<bool> Delete(long id);
+        public Task<IEnumerable<OrderDTO>> SortSearch(string sortOrder,
+            string searchString);
     }
 }

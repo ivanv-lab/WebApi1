@@ -85,5 +85,49 @@ namespace WebApi1.Services
             order.Sum = sum;
             await _orderRepository.Update(order);
         }
+
+        public async Task<IEnumerable<OrderDTO>> SortSearch(
+            string sortOrder, string searchString)
+        {
+            var orders = await _orderRepository.GetAll();
+
+            if (!String.IsNullOrEmpty(searchString)
+                || searchString == " ")
+            {
+                orders = orders.Where(o =>
+                o.DeliveryAddress.City.Contains(searchString)
+                || o.DeliveryAddress.Street.Contains(searchString)
+                || o.DeliveryAddress.House.Contains(searchString)
+                || o.User.Surname.Contains(searchString)
+                || o.User.Firstname.Contains(searchString)
+                || o.User.Lastname.Contains(searchString)
+                || o.Date.Date.ToString().Contains(searchString))
+                    .ToList();
+            }
+
+            switch (sortOrder)
+            {
+                case "Sum":
+                    orders=orders.OrderBy(o=>o.Sum)
+                        .ToList(); break;
+                case "Sum_desc":
+                    orders=orders.OrderByDescending(o=>o.Sum)
+                        .ToList(); break;
+                case "Status_r":
+                    orders=orders.OrderBy(o=>o.StatusId==1)
+                        .ToList(); break;
+                case "Status_p":
+                    orders=orders.OrderBy(o=>o.StatusId==2)
+                        .ToList(); break;
+                case "Status_c":
+                    orders=orders.OrderBy(o=>o.StatusId==3)
+                        .ToList(); break;
+                default:
+                    orders = orders.OrderByDescending(o => o.Id)
+                        .ToList(); break;
+            }   
+
+            return _mapper.MapList(orders);
+        }
     }
 }
