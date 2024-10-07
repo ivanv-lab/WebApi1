@@ -116,6 +116,9 @@ namespace WebApi1.Services
                 case "House_desc":
                     addresses=addresses.OrderByDescending(a=> Convert.ToInt32(a.House))
                         .ToList(); break;
+                case "Id_asc":
+                    addresses = addresses.OrderBy(a => a.Id)
+                        .ToList(); break;
                 default:
                     addresses = addresses.OrderByDescending(a => a.Id).ToList();
                     break;

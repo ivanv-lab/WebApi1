@@ -31,6 +31,16 @@ namespace WebApi1
                 (opt => opt.UseSqlite(builder.Configuration
                 .GetConnectionString("WebApi1")));
 
+            builder.Services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins("http://localhost:5150");
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                });
+            });
+
             //AddSingleton и Addtransient в данном случае
             //делают одно и то же и работают оба варианта
 
@@ -74,7 +84,7 @@ namespace WebApi1
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseCors();
             app.MapControllers();
 
             app.Run();
